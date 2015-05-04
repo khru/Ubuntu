@@ -1,10 +1,12 @@
+while true
+do
+	if [[ $EUID -ne 0 ]]; then
+	echo "Este script requiere privilegios de superusuario (root)" 1>&2
+	exit 1
+	fi
 clear
-if [[ $EUID -ne 0 ]]; then
-echo "Este script requiere privilegios de superusuario (root)" 1>&2
-exit 1
-fi
-echo "  _    _"                
-echo " | |  | |"               
+echo "  _    _"
+echo " | |  | |"
 echo " | | _| |__  _ __ _   _ "
 echo " | |/ / '_ \| '__| | | |"
 echo " |   <| | | | |  | |_| |"
@@ -27,63 +29,64 @@ echo " 12 - Editar el fichero 10periodic"
 echo " 13 - Salir"
 echo " 14 - Modificar config.sh"
 echo "=========================================================="
-echo -n "Selecione una opcion: "
+echo "Selecione una opcion:"
 read opcion
 case $opcion in
-	1) nano /etc/apt/sources.list
-	;;
-	2) nano /etc/network/interfaces
-	;;
-	3) nano /etc/hosts
-	;;
-	4) nano /etc/hostname
-	;;
-	5)service networking stop
-	read -p "Presione ENTER para continuar ..."
-	;;
-	6)while true;do echo -n "#"; sleep 1;done &
-		service networking start
-		kill $!; trap "kill $!" SIGTERM
-		read -p "Presione ENTER para continuar ..."
-	;;
-	7)service networking restart
-	read -p "Presiones ENTER para continuar ..."
-	;;
-	8)echo -n "Inserte la direccion IP del host: "
-	read ip
-		ping -c 10 $ip
-	read -p "Este es el resultado, presione ENTER para continuar"
-	;;
-	9) ifconfig
-	 read -p "Presione ENTER para continuar"
-	;;
-	10)ifconfig
-		echo -n "inserte la interfaz que desa tumbar: "
-		read interfaz
-		clear
-		ifconfig $interfaz down
-		ifconfig
-		read -p "Presione ENTER para continuar ..."
-	;;
-	11)	echo 
-	        echo "======================================================"
-		echo "==>  Lista de interfaces levantados y SIN LEVANTAR <=="
-		echo "======================================================"
-		ifconfig -a
-		echo -n "Inserte la interfaz que desea levantar: "
-		read interfaz
-		clear
-		ifconfig $interfaz up
-		ifconfig
-		read -p "Presione ENTER para continuar ..."
-	;;
-	12)nano /etc/apt/apt.conf.d/10periodic
-	;;
-	13)exit
-	;;
-	14)nano config.sh
-	;;
-	*) echo "Opcion erronea inserte un parametro adecuado"
-	read -p "Presione ENTER para continuar"
-esac
+			1) nano /etc/apt/sources.list
+			;;
+			2) nano /etc/network/interfaces
+			;;
+			3) nano /etc/hosts
+			;;
+			4) nano /etc/hostname
+			;;
+			5)service networking stop
+			read -p "Presione ENTER para continuar ..."
+			;;
+			6)while true;do echo -n "#"; sleep 1;done &
+				service networking start
+				kill $!; trap "kill $!" SIGTERM
+				read -p "Presione ENTER para continuar ..."
+			;;
+			7)service networking restart
+			read -p "Presiones ENTER para continuar ..."
+			;;
+			8)echo -n "Inserte la direccion IP del host: "
+			read ip
+				ping -c 10 $ip
+			read -p "Este es el resultado, presione ENTER para continuar"
+			;;
+			9) ifconfig
+			 read -p "Presione ENTER para continuar"
+			;;
+			10)ifconfig
+				echo -n "inserte la interfaz que desa tumbar: "
+				read interfaz
+				clear
+				ifconfig $interfaz down
+				ifconfig
+				read -p "Presione ENTER para continuar ..."
+			;;
+			11)	echo 
+			    echo "======================================================"
+				echo "==>  Lista de interfaces levantados y SIN LEVANTAR <=="
+				echo "======================================================"
+				ifconfig -a
+				echo -n "Inserte la interfaz que desea levantar: "
+				read interfaz
+				clear
+				ifconfig $interfaz up
+				ifconfig
+				read -p "Presione ENTER para continuar ..."
+			;;
+			12)nano /etc/apt/apt.conf.d/10periodic
+			;;
+			13)exit
+			;;
+			14)nano config.sh
+			;;
+			*) echo "Opcion erronea inserte un parametro adecuado"
+			read -p "Presione ENTER para continuar"
+			;;
+		esac
 done
